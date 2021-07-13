@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang='en'>
+   <head>
+        <meta name='viewport' content='width=device-width'>
+        <title>WeatherStation</title>
+   </head>
+   <body>
+        <h1>WeatherStation setup</h1><p>Please define your parameters.
+        <br /><form method='POST' action='/preferences' id="s"><h4>Settings</h4>
+          <fieldset><legend>Webhook</legend>
+          <label>Fingerprnt</label><br /><input type='text' placeholder='fingerprint' name='fingerprint' required="required" pattern="[A-F0-9:]{32,64}" title="Server's TLS fingerprint"/>
+        	<br /><label>Token</label><br /><input type='text' placeholder='token' name='token' id="token" required="required" pattern="[a-z0-9]{1,15}" title="Auth token"/>
+        	<br /><label>Interval</label><br /><input type='number' placeholder='interval' name='interval' min="20" required="required" title="Update interval. Min 20 sec "/>
+	  </fieldset>
+	  <fieldset><legend>Wind Sensor</legend>
+		<label>Revolutions per meter</label><br /><input type='number' placeholder='revolutions per meter' name='rev_per_meter' min="0" max="10" step=".1" required="required" />
+		<br /><label>North offset</label><br /><input type='number' placeholder='north offset' name='north_offset' min="0" max="15" required="required" />
+	  </fieldset>
+	  <br /><input type='submit' value='Save'/>
+	</form>
+        </p>
+<div id="demo"></div>
+<script >
+function l() {const p = new XMLHttpRequest();p.responseType = 'json';p.onload = function() {var f = document.getElementById("s");['interval','token','fingerprint','rev_per_meter','north_offset'].forEach(el => {f[el].value = this.response[el];});};p.open("GET", '/preferences', true); p.send();};l();
+</script>   
+</body>
+</html>
