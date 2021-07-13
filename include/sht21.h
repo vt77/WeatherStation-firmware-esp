@@ -53,8 +53,9 @@ uint8_t sensor_start()
         }
         delay(20);
 
-        buffer[0] = COMMAND_SOFT_RESET;
+        buffer[0] = COMMAND_SETTINGS;
         buffer[1] = SHT21UserRegister::RES_11_11BIT | SHT21UserRegister::OTP_RELOAD;
+        SHT21_DEBUG("[SETTINGS] 0x%X",buffer[1]);
         twi_writeTo(I2C_SHT21_ADDRESS, buffer, 2, true);
 
         return (SENSOR_TEMPERATURE|SENSOR_HUMIDITY);
