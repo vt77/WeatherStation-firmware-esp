@@ -38,7 +38,6 @@ class JsonStaticString
         }
 
         bool insert(const char * key, double value, int precision=2){
-
             char format[16];
             char number[16];
             sprintf(format,"%%.%df",precision);

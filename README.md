@@ -63,6 +63,30 @@ Currently only multiply temperature sensors may be selected. Define variable **T
 * BME280 - supports bmp280/bme280 . Type of device recognized by firmware 
 * AHT20 - aht20 sensor board   
 
+## Select datasender
+
+
+### Sending data to narodmon 
+
+Set DATASENDER to "NARODMON". This is default option.
+
+```
+DATASENDER=NARODMON
+```
+
+__PLEASE NOTE !__
+
+Variable __NARODMON_OWNER__ manditory and should be set to your *account name* on narodmon.ru 
+
+
+### Using webhook 
+
+This option for advanced users. You can receive meteo data on your own server by http(s) webhook 
+
+```
+DATASENDER=WEBHOOK
+```
+
 
 ## Building and uploading
 

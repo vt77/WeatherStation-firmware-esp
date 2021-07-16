@@ -6,3 +6,5 @@
 
 #define YES 1
 
+#define WEBHOOK "webhook.hpp"
+#define NARODMON "narodmon.hpp"

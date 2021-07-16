@@ -9,6 +9,18 @@
 
 #define AUTH_FINGERPRINT 1
 
+#ifndef DATASENDER
+#define DATASENDER NARODMON
+#endif
+
+#ifndef NARODMON_DEVICENAME
+#define NARODMON_DEVICENAME "WeatherStation"
+#endif
+
+//This is mandatory for narodmon. 
+//Please set your own id in narodmon system
+#define NARODMON_OWNER "unknown"
+
 #ifndef _ENABLE_HTTP_SERVER
 #define WIFI_SSID  "your_wifi_ssid"
 #define WIFI_PASSWORD  "your_wifi_password"
@@ -25,3 +37,5 @@
 //#define SHT21_ERROR(fmt, ...)  Serial.printf_P((PGM_P)PSTR( "[SHT21][ERROR]" fmt "\r\n"), ## __VA_ARGS__)
 //#define WEBHOOK_ERROR(fmt, ...)  Serial.printf_P((PGM_P)PSTR( "[WEBHOOK][ERROR]" fmt "\r\n"), ## __VA_ARGS__)
 //#define WEBHOOK_DEBUG(fmt, ...)  Serial.printf_P((PGM_P)PSTR( "[WEBHOOK][DEBUG]" fmt "\r\n"), ## __VA_ARGS__)
+//#define NARODMON_ERROR(fmt, ...)  Serial.printf_P((PGM_P)PSTR( "[NARODMON][ERROR]" fmt "\r\n"), ## __VA_ARGS__)
+//#define NARODMON_DEBUG(fmt, ...)  Serial.printf_P((PGM_P)PSTR( "[NARODMON][DEBUG]" fmt "\r\n"), ## __VA_ARGS__)

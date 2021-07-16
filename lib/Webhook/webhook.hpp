@@ -7,9 +7,6 @@
 #define WEBHOOK_ERROR(...)
 #endif
 
-
-namespace vt77 {
-
 #ifdef _ENABLE_TLS_WEBHOOK
 #include <WiFiClientSecure.h>
 WiFiClientSecure httpClient;
@@ -25,8 +22,13 @@ WiFiClient httpClient;
 MD5Builder md5build;
 #endif
 
+#include "DataSender.hpp"
 
-class Webhook
+
+namespace vt77 {
+
+
+class Webhook : public DataSender
 {
     public:
         void init(const char * tls);
@@ -132,6 +134,22 @@ void Webhook::send_data(const char * access_token, const char * body)
     line = httpClient.readStringUntil('\n');
     WEBHOOK_DEBUG("R:RESP:%s\n",line.c_str());
     WEBHOOK_DEBUG("Closing connection\n");
-}
+};
+
+//WARNING !!! The insertion status not checked !. 
+//Please provide enough space to hold all sensor's names and values
+#define MAX_JSON_STRING_LENGTH  128
+class WebhookProto : public JsonStaticString<MAX_JSON_STRING_LENGTH>
+{
+    public:
+        void start(const char * name)
+        {
+            JsonStaticString<MAX_JSON_STRING_LENGTH>::start();
+            JsonStaticString<MAX_JSON_STRING_LENGTH>::insert("id",name);
+        }
+};
+
+#define DATA_FORMAT WebhookProto
+Webhook datasender;
 
 }

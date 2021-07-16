@@ -12,12 +12,19 @@
 #include <CaptivePortal.h>
 #endif
 
+#include "JsonStaticString.h"
+
+
+#ifdef DATASENDER
+#include DATASENDER
+#endif
+
+
 #define SENSOR_WINDSPEED      0
 #define SENSOR_TEMPERATURE    1
 #define SENSOR_HUMIDITY       2
 #define SENSOR_WINDDIR        3
 #define SENSOR_PRESSURE       4
-
 
 #include "sensors.hpp"
 #include "tasker.hpp"
@@ -31,8 +38,6 @@
 #include "counter.h"
 #include "as5600.h"
 
-#include "webhook.hpp"
-
 #ifndef SDA 
 #define SDA 0
 #endif
@@ -43,7 +48,6 @@
 using namespace vt77;
 
 WiFiClient net;
-Webhook webhook;
 Tasker tasker;
 
 #define SENSORS_COUNT  5
@@ -167,7 +171,7 @@ void setup() {
         Serial.println("Error load preferences. Using default");
     }
 
-    webhook.init(deviceconfig.fingerprint);
+    datasender.init(deviceconfig.fingerprint);
 
     configTime(3 * 3600, 0, "pool.ntp.org", "time.nist.gov");
 
@@ -245,7 +249,7 @@ void setup() {
             const char * data = static_cast<const char*>(sensorsCollection);
             Serial.print("[SEND]");
             Serial.println(data);      
-            webhook.send_data(deviceconfig.token,data);
+            datasender.send_data(deviceconfig.token,data);
             Serial.print("[FREEMEM] ");
             Serial.println(ESP.getFreeHeap());            
         }));
