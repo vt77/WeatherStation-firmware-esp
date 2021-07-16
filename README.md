@@ -74,10 +74,13 @@ Set DATASENDER to "NARODMON". This is default option.
 DATASENDER=NARODMON
 ```
 
-__PLEASE NOTE !__
+**Please note :**
 
-Variable __NARODMON_OWNER__ manditory and should be set to your *account name* on narodmon.ru 
+Variable __NARODMON_USER__  should be set to your login,email or phonenumber of narodmon.ru for automatic station registration
 
+```
+NARODMON_USER="conion"
+```
 
 ### Using webhook 
 
