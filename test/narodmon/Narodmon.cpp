@@ -52,7 +52,7 @@ class MockWiFiClient
 #define NARODMON_ERROR(fmt,...) std::printf("[NARODMON][ERROR]" fmt "\n", ## __VA_ARGS__)
 
 #define NARODMON_DEVICENAME "WeatherStation"
-#define NARODMON_OWNER "test"
+#define NARODMON_USER "test"
 
 //Mock WiFiClient class
 #define WiFiClient MockWiFiClient

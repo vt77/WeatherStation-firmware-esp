@@ -19,7 +19,7 @@
 
 //This is mandatory for narodmon. 
 //Please set your own id in narodmon system
-#define NARODMON_OWNER "unknown"
+//#define NARODMON_USER "unknown"
 
 #ifndef _ENABLE_HTTP_SERVER
 #define WIFI_SSID  "your_wifi_ssid"

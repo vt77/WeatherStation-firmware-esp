@@ -19,7 +19,7 @@ namespace vt77 {
      *  Sends one chank of data per line 
      * 
      *  #XX-XX-XX-XX-XX-XX#WeatherStation -  Id and name (mandatory) 
-     *  #OWNER#your_name                  -  Owner. May be sended once 
+     *  #OWNER#your_name                  -  Owner. Optional  
      *  #LAT#XX.XXXXX                     -  Device location. Sent once
      *  #LON#XX.XXXXX                       
      *  //Sensor data . Multiply lines may be sent
@@ -34,8 +34,8 @@ namespace vt77 {
             void start(const char *id)
             {
                 sprintf(buffer,"#%s#" NARODMON_DEVICENAME " \n",id);
-                #ifdef NARODMON_OWNER
-                strcat(buffer, "#OWNER#" NARODMON_OWNER "\n");
+                #ifdef NARODMON_USER
+                strcat(buffer, "#OWNER#" NARODMON_USER "\n");
                 #endif
             }
 

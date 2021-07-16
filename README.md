@@ -82,6 +82,8 @@ Variable __NARODMON_USER__  should be set to your login,email or phonenumber of 
 NARODMON_USER="conion"
 ```
 
+Optonal variable NARODMON_DEVICENAME may be set to name your device (default WeatherStation)
+
 ### Using webhook 
 
 This option for advanced users. You can receive meteo data on your own server by http(s) webhook 
