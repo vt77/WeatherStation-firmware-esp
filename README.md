@@ -96,7 +96,7 @@ DATASENDER=WEBHOOK
 ## Building and uploading
 
 ```
-make && make upload
+make && make data && make upload
 ```
 
 **Please note :**
