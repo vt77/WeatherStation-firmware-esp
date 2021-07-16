@@ -8,3 +8,5 @@
 
 #define WEBHOOK "webhook.hpp"
 #define NARODMON "narodmon.hpp"
+
+#define FIRMWAREVERSION "1.0.5"

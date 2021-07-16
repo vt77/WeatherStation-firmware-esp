@@ -37,6 +37,9 @@ namespace vt77 {
                 #ifdef NARODMON_USER
                 strcat(buffer, "#OWNER#" NARODMON_USER "\n");
                 #endif
+                #ifdef SENDSYSTEMID
+                strcat(buffer, "#USERAGENT#VT77ESPWeather v" FIRMWAREVERSION "\n");
+                #endif
             }
 
             void close()
