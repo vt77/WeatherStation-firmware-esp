@@ -42,7 +42,7 @@ uint8_t calc_crc(uint16_t data)
   return data >>= 8;
 }
 
-uint8_t sensor_start()
+uint8_t sht21_sensor_start()
 {
         uint8_t buffer[3];
         buffer[0] = COMMAND_SOFT_RESET;
@@ -61,7 +61,7 @@ uint8_t sensor_start()
         return (SENSOR_TEMPERATURE|SENSOR_HUMIDITY);
 }
 
-float get_temperature(){
+float sht21_get_temperature(){
         uint8_t buffer[3];
         buffer[0] = COMMAND_TEMPERATURE;
         twi_writeTo(I2C_SHT21_ADDRESS, buffer, 1, true);
@@ -80,7 +80,7 @@ float get_temperature(){
         return temperature;
 }
 
-float  get_humidity(){
+float  sht21_get_humidity(){
         uint8_t buffer[3];
         buffer[0] = COMMAND_HUMIDITY;
         twi_writeTo(I2C_SHT21_ADDRESS, buffer, 1, true);
@@ -107,12 +107,17 @@ float  get_humidity(){
         return hum;
 }
 
-uint16_t get_pressure()
+uint16_t sht21_get_pressure()
 {
         SHT21_ERROR("[PRESS] Not supported");
         return 0;
 }
 
 
-
+#ifndef UNIT_TEST
+#define SENSOR_START        sht21_sensor_start
+#define SENSOR_GET_PRESSURE sht21_get_pressure
+#define SENSOR_GET_HUMIDITY sht21_get_humidity
+#define SENSOR_GET_TEMPERATURE sht21_get_temperature
+#endif
 

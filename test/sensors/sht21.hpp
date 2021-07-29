@@ -1,5 +1,5 @@
 #include <unity.h>
-#include<iostream>
+#include <iostream>
 #include <stdio.h>
 #include "ArduinoMockup.h"
 
@@ -31,7 +31,7 @@ void test_sht21_sensor_start(void) {
         return 0;
     };
     
-    uint8_t res = sensor_start();
+    uint8_t res = sht21_sensor_start();
     TEST_ASSERT_EQUAL_INT8_MESSAGE(3,res,"[TEST][SHT21]Bad sensor start return");
 }
 
@@ -54,7 +54,7 @@ void test_sht21_get_temperature(void) {
         return 0;
     };
 
-    float temp = get_temperature();
+    float temp = sht21_get_temperature();
     TEST_ASSERT_EQUAL_INT16_MESSAGE(1149,(unsigned int)(temp*100),"[TEST][SHT21]Bad get_temperature return value");
 }
 
@@ -77,7 +77,7 @@ void test_sht21_get_humidity(void) {
         return 0;
     };
 
-    float hum = get_humidity();
+    float hum = sht21_get_humidity();
     TEST_ASSERT_EQUAL_INT16_MESSAGE(4331,(unsigned int)(hum*100),"[TEST][SHT21]Bad get_humidity return value");
 }
 

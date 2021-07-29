@@ -38,14 +38,16 @@
 #include "counter.h"
 #include "as5600.h"
 
-#ifndef SDA 
-#define SDA 0
+#ifndef I2CSDA
+#define I2CSDA 0
 #endif
-#ifndef SCL
-#define SCL 2
+#ifndef I2CSCL
+#define I2CSCL 2
 #endif
 
 using namespace vt77;
+
+#include "utils.h"
 
 WiFiClient net;
 Tasker tasker;
@@ -175,10 +177,18 @@ void setup() {
 
     configTime(3 * 3600, 0, "pool.ntp.org", "time.nist.gov");
 
-    twi_init(SDA, SCL);
+    Serial.println("Start I2C devices");
+    twi_init(I2CSDA,I2CSCL);
     twi_setClock(10000L); //10kHz for PIC12 counter
-    int flags = sensor_start();
+    int flags = SENSOR_START();
+    Serial.print("Temperature sensor flags : ");
+    Serial.println(flags, HEX);
     counter_init();
+    if( counter_get_last_error() != 0 )
+    {
+        Serial.println("WINDSPEED sensor not present");
+        goto skip_windspeed;
+    }
 
     //Calculte wind speed each second
     tasker.attach(1,std::bind([](Sensor *windspeed){
@@ -204,32 +214,31 @@ void setup() {
             Serial.println(sensors[SENSOR_WINDSPEED].get());
         },&sensors[SENSOR_WINDSPEED]
     ));
+skip_windspeed:
 
     //Read sensors and send webhook
-    tasker.attach(deviceconfig.interval,std::bind([flags](){
-
-
-            float temp = get_temperature();
+    tasker.attach(deviceconfig.interval ,std::bind([flags](){
+            float temp = SENSOR_GET_TEMPERATURE();
             if(temp != VALUE_ERROR)
             {
                 //Temperature is a basis for calculation pressure and humidity 
                 //Should be raded first
 
-                sensors[SENSOR_TEMPERATURE].set( get_temperature() );
+                sensors[SENSOR_TEMPERATURE].set( temp );
                 Serial.print("[TEMP]");
                 Serial.println(sensors[SENSOR_TEMPERATURE].get());
 
                 if(flags & SENSOR_HUMIDITY)
                 {
-                  sensors[SENSOR_HUMIDITY].set( get_humidity());
+                  sensors[SENSOR_HUMIDITY].set( SENSOR_GET_HUMIDITY());
                   Serial.print("[HUMIDITY]");
                   Serial.println(sensors[SENSOR_PRESSURE].get());
                 }
 
                 if(flags & SENSOR_PRESSURE)
                 {
-                  float p = get_pressure();
-                  sensors[SENSOR_PRESSURE].set((unsigned int)p*0.00750062); //In mmHg
+                  float p = SENSOR_GET_PRESSURE();
+                  sensors[SENSOR_PRESSURE].set((unsigned int)to_mmHg_at_sealevel(p,737)); //In mmHg
                   Serial.print("[PRESSURE]");
                   Serial.println(sensors[SENSOR_PRESSURE].get());
                 }
@@ -251,7 +260,8 @@ void setup() {
             Serial.println(data);      
             datasender.send_data(deviceconfig.token,data);
             Serial.print("[FREEMEM] ");
-            Serial.println(ESP.getFreeHeap());            
+            Serial.println(ESP.getFreeHeap());
+                    
         }));
 }
 

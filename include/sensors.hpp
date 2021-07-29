@@ -1,6 +1,6 @@
 
 //1 min
-#define MAX_TTL 60 * 1000L 
+#define MAX_TTL 60 * 1000L
 
 namespace vt77 {
 
@@ -13,6 +13,7 @@ class Sensor
         unsigned long last_updated;
     public:
         Sensor(const char *_name, int _precision = 2) : n(_name), p(_precision) {
+            last_updated = 0;
         }
 
         const char * name() const {
@@ -36,6 +37,8 @@ class Sensor
 
         bool avaliable() const
         {
+            if(last_updated == 0)
+                return false;
             return (bool)((millis() - last_updated) < MAX_TTL);
         }
 };

@@ -4,6 +4,11 @@
 #include "JsonStaticString.h"
 
 
+unsigned long millis()
+{
+    return 0;
+}
+
 class MockString : public std::string
 {
     public:
@@ -43,6 +48,16 @@ class MockWiFiClient
     {
         snprintf(buff,len,"OK\r\n");
         return 0;
+    }
+
+    int  available()
+    {
+        return 1;
+    }
+
+    void stop()
+    {
+        std::cout << "Closing client " << std::endl;
     }
 };
 

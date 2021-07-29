@@ -44,7 +44,7 @@ namespace vt77 {
 
             void close()
             {
-                strcat(buffer,"##");
+                strcat(buffer,"##\n");
             }
 
             bool insert(const char * key, double value, int precision=2){
@@ -84,26 +84,38 @@ namespace vt77 {
                 NARODMON_DEBUG("Send %s" , body);
                 client.print(body); // Send
 
+                
+                unsigned long timeout = millis();
+                while (0 == client.available()) {
+                    if (millis() - timeout > 1000)
+                    {
+                        NARODMON_ERROR("Server timeout");
+                        client.stop(); 
+                        return; 
+                    }
+                }
+
                 /*
                 //WARNING !!! String class uses dynamic memory allocation and may cause memory fragmentation
                 //Use it for debug purposes only if you want to see full server responce
-                while (client.available()) {
-                    String line = client.readStringUntil('\n');
-                    NARODMON_DEBUG("Response : %s",line.c_str() );
-                    if(!line.startsWith("OK"))
-                    {
-                        NARODMON_ERROR("Server error : %s",line.c_str() );    
-                    }
+                String line = client.readStringUntil('\n');
+                NARODMON_DEBUG("Response : %s",line.c_str() );
+                if(!line.startsWith("OK"))
+                {
+                    NARODMON_ERROR("Server error : %s",line.c_str() );    
                 }
                 */
-
+                
                 char resp[16];
-                client.read(resp,16);
-                NARODMON_DEBUG("Response : %s",resp);
+                int size = client.read(resp,16);
+                resp[size] = '\0';
+                NARODMON_DEBUG("Response : %s (%d)",resp,size);
                 if( strncmp("OK",resp,2) != 0 )
                 {
                     NARODMON_ERROR("Server error : %s", resp);
                 }
+
+               client.stop();
             };
     };
 
