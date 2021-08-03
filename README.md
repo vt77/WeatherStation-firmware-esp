@@ -7,7 +7,7 @@ Firmware for WeatherStation ESP8266
 ![GitHub issues](https://img.shields.io/github/issues-raw/vt77/WeatherStation-firmware-esp)
 
 ## Introduction
-This project is ESP8266 WiFi SoC firmware for WeatherStation. 
+This project is ESP8266 WiFi SoC firmware for [3D printed weather station](https://github.com/vt77/WeatherStation). 
 
 Although it requires an Arduino environment it does not use any public Arduino libraries and build mostly on arduino espressif8266 core framework. 
 
